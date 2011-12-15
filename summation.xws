@@ -52,3 +52,31 @@ sumpoly(f,k):={ // Πολυώνυμο f(k), k
   return(total_sum);
 
 }:;
+
+// κατασκευή πίνακα συντελεστών φθίνουσων παραγοντικών δυνάμεων που αντιστοιχούν σε κανονικές δυνάμεις(StirlingS2 στο Mathematica)
+ConstructTable(size_t):={    
+  local n,k;  //n-> γραμμές, k-> στήλες
+  local table_t:= matrix(size_t,size_t);  
+
+  for(n:=0; n<size_t; n++){
+      for(k:=0; k<size_t; k++){
+         if(n==k){
+            table_t[n,k]:=1;
+         }
+         else{  //n!=k
+            if(n<k){
+               table_t[n,k]:=0;
+            }
+            else{  // n>k
+               if(k==0){
+                 table_t[n,k]:=0;
+               }
+               else{
+                 table_t[n,k]:= k*table_t[n-1,k]+table_t[n-1,k-1]; 
+               }
+            }            
+         }
+      }
+  }
+  return(table_t);  
+}:;
